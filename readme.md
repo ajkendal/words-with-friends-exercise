@@ -5,6 +5,10 @@
 # Description
 Application is meant for users to search certain words that contain individual letters, desired prefix, or a desired suffix, from a dictionary that contains a certain amount of words.<br />
 
+## Tech Stack
+
+Java, Gliffy, Ecplise Keepler, Sublime Text, GitHub
+
 # Original Problem Statement
 
 ## Words with Friends Problem
@@ -175,3 +179,84 @@ The for loop:
   * If the “tempString” does not contain “text”, then it is not a prefix
   * If the users “text” is longer than the “tempString”, then it is not a prefix
   * If the “text” passes each if statement, then “isEqual” is true, and will print current “tempString”
+
+## containsSuffix Method
+
+```java
+public void containsSuffix(String text){ 
+  String tempString = "";
+  
+  LLNode node; node = front;
+  
+  while(node != null){
+    tempString = tempString + node.getInfo(); 
+    tempString = tempString.trim();
+
+    if(tempString.endsWith(text) == true) 
+      System.out.println(tempString);
+    
+    tempString = "";
+    node = node.getLink();
+  }
+}
+```
+
+The String “text” will be passed into the method with the characters the user entered. The while loop will start at the front of the Queue and check each word in the dictionary. It creates an empty String “tempString” stored with the info from the dictionary.<br />
+
+* We first trim the excess white space off of the “tempString”
+* We will test using the tempString.endsWith(text)
+  * If this statement evaluates to true, then it is a suffix, and will print out the “tempString”
+
+## Extra Notes
+
+When creating the application class, I decided to keep the file input accessible in main to the user, incase the user needed to change the name of the text file if it needed to be updated. Original idea was to have the “DictionaryQueue” read the file in the Constructor.
+
+```java
+String words = null;
+String wordsfile = "words.txt";
+
+DictionaryQueue dictionary = new DictionaryQueue(); 
+try{
+  Scanner file = new Scanner(new File(wordsfile)); 
+  while(file.hasNext()){
+    words = file.next(); words.trim();
+    dictionary.enqueue(new Repository(words));
+  }
+}
+catch(FileNotFoundException fnfe){ 
+  System.out.print("Can't Find words.txt File");
+}
+```
+
+The application “Scrabbler” is user friendly, with exceptions to catch small user errors, also with the static methods can be modified to add additional features that can be added and updated within the “DictionaryQueue”.<br />
+
+The added feature to print entire dictionary (mostly used to test the txt file, to ensure it was read properly) uses “toString” located in “DictionaryQueue”
+
+```java
+@Override 
+public String toString(){ 
+  String tempString = null; 
+  int count = 1; 
+  
+  LLNode node; 
+  node = front; 
+  while (node != null){ 
+    if(count % 6 == 0){ 
+      System.out.println(tempString); 
+      tempString = ""; 
+    } 
+    else{ 
+      tempString = String.format("%s %-20s", tempString, node.getInfo()); 
+    } 
+    count++; 
+    node = node.getLink(); 
+  } 
+  return ("\nAll " + size() + " words in the Dictionary."); 
+}
+```
+
+Methods that were not use were “dequeue”. But can be accessed with a simple change of the application, if client decided not to keep certain words.
+
+# Unified Modeling Language (UML)
+
+![UML](/images/uml.jpg)
