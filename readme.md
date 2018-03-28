@@ -68,7 +68,7 @@ To find all words with a specific suffix:
 11. DictionaryQueue.java
 12. DictionaryQueue.class
 13. Scrabbler.java
-	* Application
+    * Application
 14. Scrabbler.class
 15. words.txt
 
@@ -97,31 +97,81 @@ Once user has decided on option, it will then allow the user to input desired ch
 
 ```java
 public void containChar(String text){ 
-	String tempString = "";
-	int instanceCount = 0;
-	
-	LLNode node; node = front;
+  String tempString = "";
+  int instanceCount = 0;
+    
+  LLNode node; node = front;
 
-	while(node != null){
-		tempString = tempString + node.getInfo();
-		
-		for(int outerCount = text.length()-1; outerCount >= 0; outerCount --){
-			for(int innerCount = tempString.length()-1; innerCount >= 0; innerCount--){ 	if(tempString.charAt(innerCount) == text.charAt(outerCount)){
-					instanceCount++;
+  while(node != null){
+    tempString = tempString + node.getInfo();
+        
+    for(int outerCount = text.length()-1; outerCount >= 0; outerCount --){
+        for(int innerCount = tempString.length()-1; innerCount >= 0; innerCount--){     
+          if(tempString.charAt(innerCount) == text.charAt(outerCount)){
+            instanceCount++;
 
-					if(instanceCount == 1) System.out.print(tempString + "\n");
-				}
-			}
-		}
-		tempString = ""; 
-		instanceCount = 0; 
-		node = node.getLink();
-	}
+            if(instanceCount == 1) System.out.print(tempString + "\n");
+          }
+        }
+    }
+    tempString = ""; 
+    instanceCount = 0; 
+    node = node.getLink();
+  }
 }
 ```
 
 The String “text” will be passed into the method with the characters the user entered. The while loop will start at the front of the Queue and check each word in the dictionary. It creates an empty String “tempString” stored with the info from the dictionary.
-	The nested for loops:
-		* The “outerCount” will keep track of the character position that the user enters (they have up to seven)
-		* The “innerCount” will keep track of the character position in the current word.
-			* Inside the inner loop the if conditions will check for words that may have the same character multiple times so they aren’t repeated when being printed for the user.
+<br />
+The nested for loops:
+* The “outerCount” will keep track of the character position that the user enters (they have up to seven)
+* The “innerCount” will keep track of the character position in the current word.
+    * Inside the inner loop the if conditions will check for words that may have the same character multiple times so they aren’t repeated when being printed for the user.
+
+## containsPrefix Method
+
+```java
+public void containsPrefix(String text){ 
+  String tempString = "";
+  boolean isEqual = true;
+  
+  LLNode node; 
+  node = front;
+  
+  while(node != null){
+    tempString = tempString + node.getInfo();
+    for(int textCount = 0; textCount < text.length(); textCount++){ 
+      if(text.charAt(textCount) != tempString.charAt(textCount)){
+        isEqual = false;
+        textCount = text.length();
+      }
+      else if(tempString.contains(text) == false){ 
+        isEqual = false;
+        textCount = text.length();
+      }
+      else if(text.length() > tempString.length()){ 
+        isEqual = false;
+        textCount = text.length();
+      }
+      else
+        isEqual = true;
+    }
+    if(isEqual == true){ 
+      System.out.print(tempString + "\n");
+    }
+
+    tempString = "";
+    node = node.getLink();
+  }
+}
+```
+
+The String “text” will be passed into the method with the characters the user entered. We will have a Boolean variable “isEqual” to compare the string to the beginning of the word stored in the dictionary. The while loop will start at the front of the Queue and check each word in the dictionary. It creates an empty String “tempString” stored with the info from the dictionary.<br />
+
+The for loop:
+* The “textCount” will run the length of the user’s desired prefix.
+  * If the character at the current position “textCount” for “text” is not equivalent to the character at the current position “textCount” for “tempString”, then it is not a prefix
+    * since prefix is at the start of the word we can use the same integer variable that starts at 0 for the position in the string
+  * If the “tempString” does not contain “text”, then it is not a prefix
+  * If the users “text” is longer than the “tempString”, then it is not a prefix
+  * If the “text” passes each if statement, then “isEqual” is true, and will print current “tempString”
