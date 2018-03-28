@@ -7,7 +7,7 @@ Application is meant for users to search certain words that contain individual l
 
 ## Tech Stack
 
-Java, Gliffy, Ecplise Keepler, Sublime Text, GitHub
+Java, Gliffy, Ecplise, Sublime Text, GitHub
 
 # Original Problem Statement
 
