@@ -95,6 +95,10 @@ Enter Option:
 
 Once user has decided on option, it will then allow the user to input desired characters that they are searching for.
 
+# Unified Modeling Language (UML)
+
+![UML](/images/uml.jpg)
+
 # Logic 
 
 ## containChar Method
@@ -257,6 +261,3 @@ public String toString(){
 
 Methods that were not use were “dequeue”. But can be accessed with a simple change of the application, if client decided not to keep certain words.
 
-# Unified Modeling Language (UML)
-
-![UML](/images/uml.jpg)
